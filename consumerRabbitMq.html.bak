@@ -1,0 +1,37 @@
+<html>
+<head>
+<title>Message from rabbitMq</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</link>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+</script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js">
+</script>
+</head>
+<style>
+</style>
+<script>
+
+$(document).ready(function(){
+var urlEndpoint="http://localhost:8080/subscribe";
+var source = new EventSource(urlEndpoint);
+console.log("event123")
+source.onmessage = function(event) {
+   console.log("122",event.data)
+   document.getElementById("result").innerHTML += event.data + "<br>";
+  };
+  source.onopen = e => console.log('open');
+source.onerror = e => {
+        if (e.readyState == EventSource.CLOSED) {
+	   console.log('close');
+        }
+	else {
+	   source = new EventSource(urlEndpoint);
+	}
+};
+})
+</script>
+<body>
+<div id="result"></div>
+</body>
+</html>
